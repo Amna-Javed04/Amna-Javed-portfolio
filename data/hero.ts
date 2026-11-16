@@ -3,7 +3,7 @@ import { site } from "@/data/site";
 /** Hero copy and the decorative bubbles that orbit it. */
 export const hero = {
   intro: "Welcome to the portfolio of",
-  words: ["DESIGNER", "DEVELOPER", "PROGRAMMER", "AI BUILDER"],
+  words: ["PROGRAMMER", "AI BUILDER", "DEVELOPER", "DESIGNER"],
   /** Longest word reserves the line height so cycling never shifts layout. */
   longestWord: "PROGRAMMER",
   name: "Amna Javed",

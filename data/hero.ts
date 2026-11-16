@@ -7,7 +7,6 @@ export const hero = {
   /** Longest word reserves the line height so cycling never shifts layout. */
   longestWord: "PROGRAMMER",
   name: "Amna Javed",
-  role: "CS Undergrad",
   meta: ["Pakistan", "BS Computer Science ’27", "Open to internships"],
   primaryCta: {
     label: "Let’s Connect",

@@ -1,7 +1,6 @@
 import { about } from "@/data/about";
 import { AboutStats } from "@/components/about/about-stats";
 import { Card } from "@/components/ui/card";
-import { Pill } from "@/components/ui/pill";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 
@@ -33,14 +32,6 @@ export function About() {
                 </p>
               ))}
             </div>
-
-            {about.draft ? (
-              <div className="mt-7 flex justify-center">
-                <Pill variant="muted" className="text-[0.625rem] uppercase tracking-[0.16em]">
-                  {about.draftNote}
-                </Pill>
-              </div>
-            ) : null}
 
             <AboutStats />
           </Card>

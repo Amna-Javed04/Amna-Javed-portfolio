@@ -70,7 +70,7 @@ export function AboutStats() {
   return (
     <dl
       ref={listRef}
-      className="mt-10 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-3"
+      className="mt-10 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2"
     >
       {about.stats.map((stat) => (
         <div key={stat.label} className="flex flex-col gap-1.5 bg-surface/80 p-6">

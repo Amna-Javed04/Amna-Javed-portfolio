@@ -33,14 +33,10 @@ export function Hero() {
 
         <h1
           id="hero-title"
-          aria-label={`${hero.name}, ${hero.role}`}
+          aria-label={hero.name}
           className="mt-7 text-balance text-xl font-semibold tracking-[-0.02em] sm:text-2xl"
         >
           {hero.name}
-          <span aria-hidden="true" className="mx-2.5 font-normal text-line-bright">
-            |
-          </span>
-          <span className="font-normal text-muted">{hero.role}</span>
           <span
             aria-hidden="true"
             className="caret ml-1.5 inline-block h-[1.05em] w-[2px] translate-y-[0.16em] bg-accent"

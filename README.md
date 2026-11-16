@@ -51,7 +51,7 @@ components/
 data/
   site.ts             Name, role, links, nav, resume path (edit me)
   hero.ts             Hero copy, cycling words, bubble labels
-  about.ts            About copy (draft) and the three stats
+  about.ts            About copy and the two stats
   experience.ts       Timeline roles, dates and bullets
   projects.ts         Cards plus each case study's content and links
   research.ts         Paper title, status and abstract placeholder
@@ -112,8 +112,8 @@ labelled placeholders in the UI. No metrics, links or quotes are invented.
 
 ## About, experience and projects
 
-- **About** is a centred glass card with draft copy (marked in the UI until `about.draft` is set
-  to `false`) and a three-fact stat row that counts up when it enters the viewport.
+- **About** is a centred glass card with a general overview and a two-fact stat row that counts
+  up when it enters the viewport.
 - **Experience** alternates cards around a vertical line that draws itself with ScrollTrigger;
   the outlined 01–04 numerals are decorative and the list is a real ordered list.
 - **Projects** open a focus-trapped case-study dialog: problem, role, architecture placeholder,

@@ -74,7 +74,7 @@ export function CustomCursor() {
   }, []);
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[100] hidden [@media(hover:hover)and(pointer:fine)]:block">
+    <div aria-hidden="true" className="custom-cursor pointer-events-none fixed inset-0 z-[100]">
       <div
         ref={dotRef}
         className="fixed left-0 top-0 h-1.5 w-1.5 rounded-full bg-accent opacity-0 shadow-glow-dot transition-opacity duration-200"

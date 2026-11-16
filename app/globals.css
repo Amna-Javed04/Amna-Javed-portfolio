@@ -194,6 +194,16 @@
 
 /* Cursor ring: position lives on the parent, scale on the child. */
 @layer components {
+  .custom-cursor {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .custom-cursor {
+      display: block;
+    }
+  }
+
   .cursor-ring__inner {
     transition:
       transform 320ms var(--ease-out-expo),

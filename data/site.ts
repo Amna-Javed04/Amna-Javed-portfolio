@@ -5,7 +5,7 @@
 export const site = {
   name: "Amna Javed",
   firstName: "Amna",
-  role: "Computer Science Undergrad",
+  role: "Full-Stack & AI-Integration Developer",
   tagline: "I build thoughtful software for people the internet usually forgets.",
   description:
     "Portfolio of Amna Javed, a Computer Science undergraduate building web applications, AI/ML tools and mental-health technology for Pakistan.",

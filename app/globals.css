@@ -1,0 +1,404 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-void: #050507;
+  --color-surface: #0e0e12;
+  --color-surface-raised: #121018;
+  --color-line: #241a33;
+  --color-line-bright: #3b2a55;
+
+  /* Content */
+  --color-ink: #f2f2f7;
+  --color-muted: #a1a1aa;
+
+  /* Accent */
+  --color-accent: #a855f7;
+  --color-accent-deep: #7c3aed;
+  --color-accent-soft: #2a1646;
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-audiowide), var(--font-inter), ui-sans-serif, sans-serif;
+
+  /* Shape */
+  --radius-card: 22px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Glow shadows are tokens so multi-layer values survive Tailwind parsing. */
+  --shadow-glow: 0 0 0 1px rgba(168, 85, 247, 0.3), 0 0 32px -10px rgba(168, 85, 247, 0.5);
+  --shadow-glow-strong: 0 0 0 1px rgba(192, 132, 252, 0.55), 0 14px 48px -10px rgba(168, 85, 247, 0.8);
+  --shadow-glow-dot: 0 0 12px 2px rgba(168, 85, 247, 0.7);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    color-scheme: dark;
+    --scroll-progress: 0;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 38%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Thin, quiet scrollbar that still meets contrast. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent-soft) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-accent-soft);
+    border: 3px solid var(--color-void);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-line-bright);
+  }
+
+  /* Custom cursor replaces the native one only on precise pointers. */
+  @media (hover: hover) and (pointer: fine) {
+    body[data-custom-cursor="on"],
+    body[data-custom-cursor="on"] * {
+      cursor: none;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                          */
+/* ------------------------------------------------------------------ */
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 76rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility glass-card {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-surface-raised) 82%, transparent),
+      color-mix(in srgb, var(--color-surface) 94%, transparent)
+    );
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow:
+    0 1px 0 0 color-mix(in srgb, white 4%, transparent) inset,
+    0 24px 60px -40px rgba(0, 0, 0, 0.9);
+}
+
+@utility glow-hover {
+  transition:
+    border-color 320ms var(--ease-out-expo),
+    box-shadow 320ms var(--ease-out-expo),
+    transform 320ms var(--ease-out-expo);
+
+  &:hover,
+  &:focus-within {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-line));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-accent) 18%, transparent),
+      0 24px 70px -32px color-mix(in srgb, var(--color-accent-deep) 55%, transparent);
+  }
+}
+
+@utility text-accent-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-accent) 0%,
+    #d8b4fe 45%,
+    var(--color-accent-deep) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Grainy depth layer, pure CSS so nothing blocks paint. */
+@utility noise-layer {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  mix-blend-mode: soft-light;
+}
+
+/* Cursor ring: position lives on the parent, scale on the child. */
+@layer components {
+  .cursor-ring__inner {
+    transition:
+      transform 320ms var(--ease-out-expo),
+      background-color 320ms var(--ease-out-expo),
+      border-color 320ms var(--ease-out-expo);
+  }
+
+  .cursor-ring[data-hover="true"] .cursor-ring__inner {
+    transform: scale(1.65);
+    border-color: color-mix(in srgb, var(--color-accent) 90%, transparent);
+    background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  }
+
+  /* Experience timeline: outlined display numerals. */
+  .timeline-number {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-accent) 55%, transparent);
+  }
+
+  @supports not (-webkit-text-stroke: 1px red) {
+    .timeline-number {
+      color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    }
+  }
+
+  /* Hero: glitch word layers, caret and floating icon bubbles. */
+  .glitch-word {
+    color: var(--color-accent);
+    text-shadow:
+      0 0 70px rgba(168, 85, 247, 0.45),
+      0 0 22px rgba(168, 85, 247, 0.3);
+  }
+
+  .glitch-word::before,
+  .glitch-word::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    pointer-events: none;
+    font: inherit;
+    letter-spacing: inherit;
+    text-shadow: none;
+  }
+
+  .glitch-word[data-glitch="true"]::before {
+    color: #67e8f9;
+    opacity: 0.6;
+    animation: glitch-slice 380ms steps(2, end) 1;
+  }
+
+  .glitch-word[data-glitch="true"]::after {
+    color: #f472b6;
+    opacity: 0.5;
+    animation: glitch-slice 320ms steps(2, end) 1 reverse;
+  }
+
+  @keyframes glitch-slice {
+    0% {
+      clip-path: inset(0 0 82% 0);
+      transform: translate3d(-4px, 0, 0);
+    }
+    30% {
+      clip-path: inset(62% 0 18% 0);
+      transform: translate3d(5px, 0, 0);
+    }
+    60% {
+      clip-path: inset(28% 0 54% 0);
+      transform: translate3d(-3px, 0, 0);
+    }
+    100% {
+      clip-path: inset(0 0 100% 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .caret {
+    animation: caret-blink 1.15s steps(1, end) infinite;
+  }
+
+  @keyframes caret-blink {
+    0%,
+    45% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .hero-parallax {
+    --px: 0;
+    --py: 0;
+  }
+
+  .bubble-float {
+    animation: bubble-float 8s ease-in-out infinite;
+  }
+
+  .bubble-glow {
+    animation: bubble-glow 5.5s ease-in-out infinite;
+  }
+
+  @keyframes bubble-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(0, -16px, 0) rotate(2deg);
+    }
+  }
+
+  @keyframes bubble-glow {
+    0%,
+    100% {
+      box-shadow:
+        0 18px 50px -26px rgba(168, 85, 247, 0.55),
+        0 0 0 1px rgba(168, 85, 247, 0.12);
+    }
+    50% {
+      box-shadow:
+        0 20px 60px -18px rgba(168, 85, 247, 0.8),
+        0 0 0 1px rgba(168, 85, 247, 0.3);
+    }
+  }
+
+  /* Fixed cosmic depth behind every section. */
+  .ambient-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.5;
+    animation: ambient-drift 26s ease-in-out infinite alternate;
+  }
+
+  .ambient-orb--one {
+    top: -18rem;
+    left: -10rem;
+    height: 42rem;
+    width: 42rem;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.5), transparent 65%);
+  }
+
+  .ambient-orb--two {
+    right: -14rem;
+    bottom: -16rem;
+    height: 38rem;
+    width: 38rem;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.32), transparent 65%);
+    animation-delay: -12s;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(168, 85, 247, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(168, 85, 247, 0.06) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 70% 55% at 50% 40%, black, transparent 75%);
+  }
+
+  @keyframes ambient-drift {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(4rem, 3rem, 0) scale(1.12);
+    }
+  }
+
+  /* Reveal primitive: hidden only where scripting is available. */
+  [data-reveal] {
+    opacity: 1;
+  }
+
+  @media (scripting: enabled) {
+    html [data-reveal="pending"] {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reduced motion                                                     */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html [data-reveal="pending"] {
+    opacity: 1;
+    transform: none;
+  }
+}
